@@ -405,7 +405,7 @@ class LPPLS(object):
         # axes up to make room for them
         # fig.autofmt_xdate()
 
-    def mp_compute_nested_fits(self, workers, window_size=80, smallest_window_size=20, outer_increment=5, inner_increment=2, max_searches=25, filter_conditions_config={}):
+    def mp_compute_nested_fits(self, workers, window_size=80, smallest_window_size=20, outer_increment=5, inner_increment=2, max_searches=25, filter_conditions_config={}, minimizer='Nelder-Mead'):
         obs_copy = self.observations
         obs_opy_len = len(obs_copy[0]) - window_size
         func = self._func_compute_nested_fits
@@ -421,6 +421,7 @@ class LPPLS(object):
             outer_increment,
             inner_increment,
             max_searches,
+            minimizer,
         ) for i in range(0, obs_opy_len+1, outer_increment)]
 
         with Pool(processes=workers) as pool:
@@ -430,7 +431,7 @@ class LPPLS(object):
 
     def _func_compute_nested_fits(self, args):
 
-        obs, window_size, n_iter, smallest_window_size, outer_increment, inner_increment, max_searches = args
+        obs, window_size, n_iter, smallest_window_size, outer_increment, inner_increment, max_searches, minimizer = args
 
         n_fits = window_size - smallest_window_size
 
@@ -467,7 +468,7 @@ class LPPLS(object):
                 # print('cmaes fit is running!')
                 tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_iteration=2500, pop_size=4, obs=obs_shrinking_slice)
             else:
-                tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_searches, obs=obs_shrinking_slice)
+                tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_searches, obs=obs_shrinking_slice, minimizer=minimizer)
 
             nested_t1 = obs_shrinking_slice[0][0]
             nested_t2 = obs_shrinking_slice[0][-1]
