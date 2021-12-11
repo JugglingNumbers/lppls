@@ -83,6 +83,8 @@ class LPPLSCMAES(LPPLS):
             es.tell(solutions, solution)
             es.logger.add()  # write data to disc to be plotted
             es.disp()
+            
+        print(f'best fitness:{es.result[1]}')
 
         # after while loop print infos and plot the final
         # es.result_pretty()
