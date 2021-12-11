@@ -405,7 +405,9 @@ class LPPLS(object):
         # axes up to make room for them
         # fig.autofmt_xdate()
 
-    def mp_compute_nested_fits(self, workers, window_size=80, smallest_window_size=20, outer_increment=5, inner_increment=2, max_searches=25, filter_conditions_config={}, minimizer='Nelder-Mead'):
+    def mp_compute_nested_fits(self, workers, window_size=80, smallest_window_size=20, outer_increment=5, 
+                               inner_increment=2, max_searches=25, filter_conditions_config={}, 
+                               minimizer='Nelder-Mead', no_multiprocessing = False):
         obs_copy = self.observations
         obs_opy_len = len(obs_copy[0]) - window_size
         func = self._func_compute_nested_fits
@@ -423,9 +425,12 @@ class LPPLS(object):
             max_searches,
             minimizer,
         ) for i in range(0, obs_opy_len+1, outer_increment)]
-
-        with Pool(processes=workers) as pool:
-            self.indicator_result = pool.map(func, func_arg_map)
+        
+        if no_multiprocessing:
+            self.indicator_result = [func(arg_map) for arg_map in func_arg_map]
+        else:
+            with Pool(processes=workers) as pool:
+                self.indicator_result = pool.map(func, func_arg_map)
 
         return self.indicator_result
 
