@@ -90,7 +90,7 @@ class LPPLSCMAES(LPPLS):
 
         # after while loop print infos and plot the final
         if logger is not None:
-            logger.info(f'{es.result[1]}')
+            logger.info(f'{es.result}')
         # cm.plot()
         # plt.savefig('cmaes.png', dpi=300)
 
@@ -115,6 +115,6 @@ class LPPLSCMAES(LPPLS):
             O = self.get_oscillations(w, tc, t1, t2)
             D = self.get_damping(m, w, b, c)
 
-            return tc, m, w, a, b, c, c1, c2, O, D
+            return tc, m, w, a, b, c, c1, c2, O, D, es.result
         else:
-            return 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+            return 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, es.result
