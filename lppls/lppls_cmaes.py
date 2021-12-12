@@ -3,6 +3,9 @@ from lppls.lppls import LPPLS
 # import multiprocessing as mp
 import numpy as np
 from scipy.stats import chisquare
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class LPPLSCMAES(LPPLS):
@@ -85,7 +88,7 @@ class LPPLSCMAES(LPPLS):
             es.disp()
 
         # after while loop print infos and plot the final
-        es.logger.add(es.result)
+        logger.info(es.result)
         # cm.plot()
         # plt.savefig('cmaes.png', dpi=300)
 
