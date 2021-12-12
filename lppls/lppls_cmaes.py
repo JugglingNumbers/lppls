@@ -115,6 +115,6 @@ class LPPLSCMAES(LPPLS):
             O = self.get_oscillations(w, tc, t1, t2)
             D = self.get_damping(m, w, b, c)
 
-            return tc, m, w, a, b, c, c1, c2, O, D, es.result
+            return tc, m, w, a, b, c, c1, c2, O, D, es.result.fbest
         else:
-            return 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, es.result
+            return 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, es.result.fbest
