@@ -3,6 +3,9 @@ from lppls.lppls import LPPLS
 # import multiprocessing as mp
 import numpy as np
 from scipy.stats import chisquare
+import logging
+
+logger = logging.getLogger(__name__)
 
 class LPPLSCMAES(LPPLS):
 
