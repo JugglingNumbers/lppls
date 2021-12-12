@@ -85,7 +85,7 @@ class LPPLSCMAES(LPPLS):
             es.disp()
 
         # after while loop print infos and plot the final
-        # es.result_pretty()
+        es.logger.add(es.result)
         # cm.plot()
         # plt.savefig('cmaes.png', dpi=300)
 
