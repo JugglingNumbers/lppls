@@ -407,7 +407,7 @@ class LPPLS(object):
 
     def mp_compute_nested_fits(self, workers, window_size=80, smallest_window_size=20, outer_increment=5, 
                                inner_increment=2, max_searches=25, filter_conditions_config={}, 
-                               minimizer='Nelder-Mead', no_multiprocessing = False):
+                               minimizer='Nelder-Mead', no_multiprocessing = False, logger= None):
         obs_copy = self.observations
         obs_opy_len = len(obs_copy[0]) - window_size
         func = self._func_compute_nested_fits
@@ -424,6 +424,7 @@ class LPPLS(object):
             inner_increment,
             max_searches,
             minimizer,
+            logger,
         ) for i in range(0, obs_opy_len+1, outer_increment)]
         
         if no_multiprocessing:
@@ -436,7 +437,7 @@ class LPPLS(object):
 
     def _func_compute_nested_fits(self, args):
 
-        obs, window_size, n_iter, smallest_window_size, outer_increment, inner_increment, max_searches, minimizer = args
+        obs, window_size, n_iter, smallest_window_size, outer_increment, inner_increment, max_searches, minimizer, logger = args
 
         n_fits = window_size - smallest_window_size
 
@@ -471,7 +472,7 @@ class LPPLS(object):
             # fit the model to the data and get back the params
             if self.__class__.__name__ == 'LPPLSCMAES':
                 # print('cmaes fit is running!')
-                tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_iteration=2500, pop_size=4, obs=obs_shrinking_slice)
+                tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_iteration=2500, pop_size=4, obs=obs_shrinking_slice, logger=logger)
             else:
                 tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_searches, obs=obs_shrinking_slice, minimizer=minimizer)
 
