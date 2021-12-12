@@ -7,6 +7,9 @@ import random
 # from datetime import datetime as date
 # from pandas._libs.tslibs.np_datetime import OutOfBoundsDatetime
 from scipy.optimize import minimize
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class LPPLS(object):
