@@ -87,7 +87,7 @@ class LPPLSCMAES(LPPLS):
 
         # after while loop print infos and plot the final
         if logger is not None:
-            logger.info(es.result_pretty())
+            logger.info(f'{es.result[1]}')
         # cm.plot()
         # plt.savefig('cmaes.png', dpi=300)
 
