@@ -42,7 +42,7 @@ class LPPLSCMAES(LPPLS):
         error, _ = chisquare(f_obs=res, f_exp=obs[1, :])
         return error
 
-    def fit(self, max_iteration=1000, factor_sigma=0.1, pop_size=1, obs=None):
+    def fit(self, max_iteration=1000, factor_sigma=0.1, pop_size=1, obs=None, logger = None):
         """
         Runs the optimazation loop
 
@@ -86,7 +86,8 @@ class LPPLSCMAES(LPPLS):
         print(f'best fitness:{es.result[1]}')
 
         # after while loop print infos and plot the final
-        logger.info(es.result_pretty())
+        if logger is not None:
+            logger.info(es.result_pretty())
         # cm.plot()
         # plt.savefig('cmaes.png', dpi=300)
 
