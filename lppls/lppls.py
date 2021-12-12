@@ -475,9 +475,10 @@ class LPPLS(object):
             # fit the model to the data and get back the params
             if self.__class__.__name__ == 'LPPLSCMAES':
                 # print('cmaes fit is running!')
-                tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_iteration=2500, pop_size=4, obs=obs_shrinking_slice, logger=logger)
+                tc, m, w, a, b, c, c1, c2, O, D, es_result = self.fit(max_iteration=2500, pop_size=4, obs=obs_shrinking_slice, logger=logger)
             else:
                 tc, m, w, a, b, c, c1, c2, O, D = self.fit(max_searches, obs=obs_shrinking_slice, minimizer=minimizer)
+                es_result = None
 
             nested_t1 = obs_shrinking_slice[0][0]
             nested_t2 = obs_shrinking_slice[0][-1]
@@ -509,7 +510,7 @@ class LPPLS(object):
             })
 
         # return {'t1': self.ordinal_to_date(t1), 't2': self.ordinal_to_date(t2), 'p2': p2, 'res': res}
-        return {'t1': t1, 't2': t2, 'p2': p2, 'res': res}
+        return {'t1': t1, 't2': t2, 'p2': p2, 'res': res, 'es_result': es_result}
 
     def _get_tc_bounds(self, obs, lower_bound_pct, upper_bound_pct):
         """
